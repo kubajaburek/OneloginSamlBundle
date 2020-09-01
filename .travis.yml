@@ -6,7 +6,7 @@ php:
   - 7.3
   - 7.4
 
-matrix:
+jobs:
   fast_finish: true
   include:
     - php: 7.1
@@ -21,8 +21,6 @@ matrix:
       env: SYMFONY_VERSION=5.1.*
     - php: 7.4
       env: SYMFONY_VERSION=5.1.*
-
-sudo: false
 
 cache:
   directories:
