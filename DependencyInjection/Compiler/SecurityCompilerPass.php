@@ -23,7 +23,7 @@ class SecurityCompilerPass implements CompilerPassInterface
        
         if ($container->hasDefinition($emDefinition)) {
             foreach ($container->findTaggedServiceIds('hslavich.saml_provider') as $id => $tags) {
-                $container->getDefinition($id)->addMethodCall('setEntityManager', array(new Reference($emDefinition)));
+                $container->getDefinition($id)->addMethodCall('setEntityManager', [new Reference($emDefinition)]);
             }
         }
     }

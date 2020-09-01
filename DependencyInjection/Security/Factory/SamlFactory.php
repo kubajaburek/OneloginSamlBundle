@@ -63,18 +63,18 @@ class SamlFactory extends AbstractFactory
         $definitionClassname = $this->getDefinitionClassname();
         $definition = $container->setDefinition($providerId, new $definitionClassname('hslavich_onelogin_saml.saml_provider'))
             ->replaceArgument(0, new Reference($userProviderId))
-            ->addArgument(array(
+            ->addArgument([
                  'persist_user' => $config['persist_user']
-            ))
+            ])
             ->addTag('hslavich.saml_provider')
         ;
 
         if ($config['user_factory']) {
-            $definition->addMethodCall('setUserFactory', array(new Reference($config['user_factory'])));
+            $definition->addMethodCall('setUserFactory', [new Reference($config['user_factory'])]);
         }
 
         $factoryId = $config['token_factory'] ?: 'hslavich_onelogin_saml.saml_token_factory';
-        $definition->addMethodCall('setTokenFactory', array(new Reference($factoryId)));
+        $definition->addMethodCall('setTokenFactory', [new Reference($factoryId)]);
 
         return $providerId;
      }
@@ -111,7 +111,7 @@ class SamlFactory extends AbstractFactory
             $container
                 ->setDefinition($samlListenerId, new $definitionClassname('saml.security.http.logout'))
                 ->replaceArgument(2, array_intersect_key($config, $this->options));
-            $logoutListener->addMethodCall('addHandler', array(new Reference($samlListenerId)));
+            $logoutListener->addMethodCall('addHandler', [new Reference($samlListenerId)]);
         }
     }
 

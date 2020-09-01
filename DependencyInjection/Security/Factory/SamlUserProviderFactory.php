@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ChildDefinition;
 
 class SamlUserProviderFactory implements UserProviderFactoryInterface
 {
-    protected $defaultRoles = array('ROLE_USER');
+    protected $defaultRoles = ['ROLE_USER'];
 
     public function create(ContainerBuilder $container, $id, $config)
     {
