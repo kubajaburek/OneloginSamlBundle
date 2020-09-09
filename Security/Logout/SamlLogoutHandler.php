@@ -33,12 +33,21 @@ class SamlLogoutHandler implements LogoutHandlerInterface
         }
 
         try {
-            $this->samlAuth->processSLO();
+            $redirect = $this->samlAuth->processSLO(true, null, false, null, true);
+            $this->redirect($response, $redirect);
         } catch (\OneLogin\Saml2\Error $e) {
             if (!empty($this->samlAuth->getSLOurl())) {
                 $sessionIndex = $token->hasAttribute('sessionIndex') ? $token->getAttribute('sessionIndex') : null;
-                $this->samlAuth->logout(null, [], $token->getUsername(), $sessionIndex);
+                $relayState = $request->getSchemeAndHttpHost().$request->getBaseUrl(); // website root
+                $redirect = $this->samlAuth->logout($relayState, [], $token->getUsername(), $sessionIndex, true);
+                $this->redirect($response, $redirect);
             }
         }
+    }
+
+    protected function redirect(Response $response, string $url) : void
+    {
+        $response->setStatusCode(Response::HTTP_FOUND);
+        $response->headers->set('Location', $url);
     }
 }
