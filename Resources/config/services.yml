@@ -37,3 +37,11 @@ services:
         class: Hslavich\OneloginSamlBundle\Security\Logout\SamlLogoutHandler
         arguments:
             - "@onelogin_auth"
+
+    hslavich_onelogin_saml.saml_logout_csrf_listener:
+        class: Hslavich\OneloginSamlBundle\EventSubscriber\SamlLogoutCsrfExceptionSubscriber
+        autowire: true
+        calls:
+            - [setLogoutUrlGenerator, ['@security.logout_url_generator']]
+            - [setSaml, ['@onelogin_auth']]
+        tags: ['kernel.event_subscriber']
