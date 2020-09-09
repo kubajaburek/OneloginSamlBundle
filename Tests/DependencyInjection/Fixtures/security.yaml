@@ -1,0 +1,9 @@
+security:
+    providers:
+        saml_provider:
+            saml:
+                user_class: Symfony\Component\Security\Core\User\User
+    firewalls:
+        main:
+            provider: saml_provider
+            saml:
