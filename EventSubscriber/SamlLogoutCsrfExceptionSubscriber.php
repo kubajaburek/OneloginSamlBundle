@@ -84,7 +84,12 @@ final class SamlLogoutCsrfExceptionSubscriber implements EventSubscriberInterfac
             return;
         }
 
-        $logoutPath = $this->generator->getLogoutPath();
+        try {
+            $logoutPath = $this->generator->getLogoutPath();
+        } catch (\Throwable $e) {
+            // LogoutUrlGenerator will throw an InvalidArgumentException if no user is logged in, let the protection fail in that case
+            return;
+        }
 
         $queryStart = strpos($logoutPath, '?');
         if (false === $queryStart)

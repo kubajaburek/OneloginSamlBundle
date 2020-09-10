@@ -43,7 +43,7 @@ class SamlLogoutCsrfExceptionSubscriberTest extends TestCase
 
     public function testUnrelatedUrl() : void
     {
-        $request = $this->getRequest('unrelated', ['SAMLRequest' => 'test']);
+        $request = $this->getRequest('/unrelated', ['SAMLRequest' => 'test']);
         $subscriber = $this->createSubscriber($this->getHttpUtils($request), $this->getSamlAuth(false), $this->getLogoutUrlGenerator());
         $event = $this->getEvent($request);
         $subscriber->onKernelException($event);
